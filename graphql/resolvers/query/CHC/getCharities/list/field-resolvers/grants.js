@@ -2,7 +2,7 @@ const ES_FIELDS = [
   "funding.grants.id",
   "funding.grants.title",
   "funding.grants.description",
-  "funding.grants.fundingOrganization",
+  "funding.grants.funder",
   "funding.grants.amountAwarded",
   "funding.grants.currency",
   "funding.grants.awardDate",
@@ -14,8 +14,8 @@ const parse = (grants) => {
   }
   return grants.map((x) => ({
     ...x,
-    fundingOrganization: [x.fundingOrganization],
-    funder: x.fundingOrganization,
+    fundingOrganization: [x.funder], // legacy
+    funder: x.funder,
   }))
 }
 
