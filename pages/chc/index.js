@@ -20,30 +20,44 @@ function TabHeader({ title, active }) {
   )
 }
 
+// export default function Search({ count, list, filters }) {
+//   return (
+//     <div className="max-w-screen-xl mx-auto flex px-2 sm:px-4 md:px-8">
+//       <Head>
+//         <title>CharityBase Search</title>
+//         <meta property="og:title" content="CharityBase Search" key="title" />
+//         <meta name="Description" content="CharityBase England & Wales Search" />
+//       </Head>
+//       <aside className="flex-shrink-0 py-24 pr-8 xl:pr-16 sticky top-0 h-screen overflow-auto">
+//         <Filters {...filters} />
+//       </aside>
+//       <div className="py-24 w-full">
+//         <div className="mb-4 text-right text-sm text-gray-700 font-semibold">
+//           {count} charities
+//         </div>
+//         <CharityList charities={list} />
+//       </div>
+//       <aside className="flex-shrink-0 py-24 pl-8 xl:pl-16 sticky top-0 h-screen overflow-auto">
+//         <div className="space-y-4">
+//           <TabHeader title="List" active />
+//           <TabHeader title="Map" />
+//           <TabHeader title="Charts" />
+//         </div>
+//       </aside>
+//     </div>
+//   )
+// }
+
 export default function Search({ count, list, filters }) {
   return (
     <div className="max-w-screen-xl mx-auto flex px-2 sm:px-4 md:px-8">
-      <Head>
-        <title>CharityBase Search</title>
-        <meta property="og:title" content="CharityBase Search" key="title" />
-        <meta name="Description" content="CharityBase England & Wales Search" />
-      </Head>
-      <aside className="flex-shrink-0 py-24 pr-8 xl:pr-16 sticky top-0 h-screen overflow-auto">
-        <Filters {...filters} />
-      </aside>
-      <div className="py-24 w-full">
-        <div className="mb-4 text-right text-sm text-gray-700 font-semibold">
-          {count} charities
-        </div>
-        <CharityList charities={list} />
+      <div>
+        Please visit{" "}
+        <a href="https://search.charitybase.uk/chc">
+          https://search.charitybase.uk/chc'
+        </a>{" "}
+        for the old search portal.
       </div>
-      <aside className="flex-shrink-0 py-24 pl-8 xl:pl-16 sticky top-0 h-screen overflow-auto">
-        <div className="space-y-4">
-          <TabHeader title="List" active />
-          <TabHeader title="Map" />
-          <TabHeader title="Charts" />
-        </div>
-      </aside>
     </div>
   )
 }

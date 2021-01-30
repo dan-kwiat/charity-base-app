@@ -48,7 +48,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <div className="flex-grow py-24 flex flex-col justify-center xl:space-y-24">
+        <div className="flex-grow py-24 flex flex-col justify-center space-y-24">
           <h1 className="text-4xl font-extrabold text-center text-white">
             The Database of Charities
           </h1>
