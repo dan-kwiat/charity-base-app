@@ -1,8 +1,8 @@
 import Cors from "cors"
 import { ApolloServer } from "apollo-server-micro"
 import schema from "graphql-schema"
-import { runMiddleware } from "helpers"
-const cors = Cors()
+import runMiddleware from "helpers/runMiddleware"
+const cors = Cors({})
 
 const apolloServer = new ApolloServer({
   schema,
