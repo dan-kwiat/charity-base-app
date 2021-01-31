@@ -1,24 +1,8 @@
 import Cors from "cors"
 import { ApolloServer } from "apollo-server-micro"
 import schema from "graphql-schema"
-
-const cors = Cors({
-  // methods: ['GET', 'POST'],
-})
-
-// Helper method to wait for a middleware to execute before continuing
-// And to throw an error when an error happens in a middleware
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result)
-      }
-
-      return resolve(result)
-    })
-  })
-}
+import { runMiddleware } from "helpers"
+const cors = Cors()
 
 const apolloServer = new ApolloServer({
   schema,
