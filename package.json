@@ -28,6 +28,7 @@
     "http-aws-es": "^6.0.0",
     "jest": "^26.1.0",
     "jsonwebtoken": "^8.5.1",
+    "micro-cors": "^0.1.1",
     "next": "^10.0.5",
     "postcss": "8.1.7",
     "postcss-flexbugs-fixes": "5.0.1",

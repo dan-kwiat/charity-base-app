@@ -1,3 +1,4 @@
+import cors from "micro-cors"
 import { ApolloServer } from "apollo-server-micro"
 import schema from "graphql-schema"
 
@@ -64,4 +65,7 @@ export const config = {
   },
 }
 
-export default apolloServer.createHandler({ path: "/api/graphql" })
+const handler = apolloServer.createHandler({ path: "/api/graphql" })
+export default cors((req, res) =>
+  req.method === "OPTIONS" ? res.end() : handler(req, res)
+)
