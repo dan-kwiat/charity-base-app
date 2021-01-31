@@ -1,6 +1,6 @@
 const { dynamoClient } = require("connection")
 
-const deleteApiKey = async function ({ id }, req) {
+const deleteApiKey = async function ({ id }, { req }) {
   try {
     const params = {
       Key: { id },

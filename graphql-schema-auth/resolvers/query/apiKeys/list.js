@@ -1,6 +1,6 @@
 const { dynamoClient } = require("connection")
 
-const listKeys = async function (_, req) {
+const listKeys = async function (_, { req }) {
   try {
     const params = {
       IndexName: "userId-index",

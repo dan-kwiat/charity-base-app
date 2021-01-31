@@ -4,7 +4,7 @@ const { dynamoClient } = require("connection")
 const MAX_API_KEYS = 3
 const DEFAULT_ROLES = ["basic"]
 
-const createApiKey = async function (_, req) {
+const createApiKey = async function (_, { req }) {
   try {
     const params = {
       IndexName: "userId-index",
