@@ -49,6 +49,15 @@ export default function Home() {
           </div>
         </div>
         <div className="flex-grow py-24 flex flex-col justify-center space-y-24">
+          <div className="text-white text-sm px-4 max-w-4xl mx-auto">
+            <span className="font-bold">Update 12:30 GMT 2021-02-01</span>:
+            CharityBase API is currently experiencing performance issues due to
+            a connectivity problem with our data storage provider:{" "}
+            <a href="https://status.aws.amazon.com/#EU_block">
+              https://status.aws.amazon.com/#EU_block
+            </a>
+            . We'll update here once we know more.
+          </div>
           <h1 className="text-4xl font-extrabold text-center text-white">
             The Database of Charities
           </h1>
