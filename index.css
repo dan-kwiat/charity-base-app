@@ -17,7 +17,7 @@
   }
 
   .docs a {
-    @apply text-gray-600 font-semibold;
+    @apply text-gray-600 font-semibold underline;
   }
   .docs a:hover {
     @apply text-black;

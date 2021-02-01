@@ -117,10 +117,11 @@ you'd do with a REST API. Simply include your query as a URL search parameter:
 https://charitybase.uk/api/graphql?query={CHC{getCharities(filters:{}){count}}}
 ```
 
-Unlike the REST paradigm however, with GraphQL it's also possible (and
-encouraged) to fetch data using `POST`. This way you don't have to worry about
-the URL getting too long since the query is sent in a JSON body. The examples in
-this documentation use `POST`.
+Unlike the REST paradigm however, with GraphQL it's also possible, and
+encouraged, to fetch data using `POST`. This way we don't have to worry about
+the URL getting too long because we can send the query string in a JSON body.
+The examples in this documentation use `POST`. We suggest you do the same, but
+it's not compulsory.
 
 ### Basic Example .js .py
 
@@ -263,7 +264,22 @@ def count_charities():
 
 ### Arguments
 
-`filters` is required on `getCharities`. Use a `search` or `income` example.
+Some fields in the GraphQL query accept arguments. You might have noticed that
+the `getCharities` field in the basic example above accepts a `filters`
+argument, which in this case is also a _required_ argument. The `filters`
+argument lets us define the kinds of charities we want to be included in the
+response. For example, to count all charities with at least £100k income, we'd
+pass the following filters:
+
+```graphql
+{
+  CHC {
+    getCharities(filters: { finances: { latestIncome: { gte: 100000 } } }) {
+      count
+    }
+  }
+}
+```
 
 ### Query Name
 
@@ -275,7 +291,7 @@ let's name our query `CountCharitiesCHC`:
 ```graphql
 query CountCharitiesCHC {
   CHC {
-    getCharities(filters: {}) {
+    getCharities(filters: { finances: { latestIncome: { gte: 100000 } } }) {
       count
     }
   }
@@ -297,7 +313,8 @@ variables which allows us to keep our query strings static. Here's how it works:
 - Send the variable value in a `variables` JSON parameter alongside the `query`
   parameter
 
-For example, let's define a variable `minIncome` in our query:
+For example, let's replace the minimum income `100000` from the query above with
+a variable called `minIncome`:
 
 ```graphql
 query CountCharitiesCHC($minIncome: Float) {
@@ -320,7 +337,7 @@ request body:
 ```
 
 > The declared variable type e.g. `Float` must match the type of the relevant
-> property e.g. `gte`, as defined in the schema.
+> field e.g. `gte`, as defined in the schema.
 
 > As with `query`, you may send `variables` as a URL search parameter instead of
 > in the body.
@@ -331,29 +348,110 @@ The [playground](/api/graphql) is an interactive environment to experiment with
 different queries. The left hand panel makes up the query string of your request
 and the right hand panel shows the API's response. Some tips:
 
-- When typing your query, use `ctrl+space` to see suggested properties and
+- When typing your query, use `ctrl+space` to see suggested fields and
   `ctrl+enter` to send a request.
-- The `DOCS` tab on the right hand side of the screen shows all the properties
-  and arguments available, including their data types.
-- If your query includes [variables](/a/docs#variables), use the
-  `QUERY VARIABLES` panel in the bottom left to type them out as JSON e.g.
+- The `DOCS` tab on the right hand side of the screen shows all the fields and
+  arguments available, including their data types.
+- If your query includes [variables](#variables), use the `QUERY VARIABLES`
+  panel in the bottom left to type them out as JSON e.g.
   `{ "minIncome": 100000 }`
 
-### Schema
+<!-- ### Schema -->
 
-### Versioning
+<!-- ### Versioning -->
 
-There is no versioning.
+<!-- There is no versioning. -->
 
 ## Query Examples
 
-## CharityBase Elements
+Below are some examples to give you an idea of what's possible. Press the pink
+play button to open them up in the playground, then customise them for your own
+purposes.
 
+### Count, Aggregate, List
+
+The `getCharities` field expects one or more of the following sub-fields:
+
+- `count`: to count all the matching charities
+- `aggregate`: to break down the total count by a particular parameter's value
+  or range
+- `list`: to show detailed information about a number of individual charities
+
+For example, let's search charities with at least £100k income for the word
+"green". In a single request we'll ask for:
+
+- the total count of charities
+- the count for each region in England & Wales
+- the id, names & activities of 10 of those charities
+
+```graphql
+query CountAggregateList {
+  CHC {
+    getCharities(
+      filters: { search: "green", finances: { latestIncome: { gte: 100000 } } }
+    ) {
+      count
+      aggregate {
+        geo {
+          region {
+            buckets {
+              key
+              name
+              count
+            }
+          }
+        }
+      }
+      list(limit: 10) {
+        id
+        names {
+          value
+        }
+        activities
+      }
+    }
+  }
+}
+```
+
+> The `filters` argument applies to each of the `count`, `aggregate` and `list`
+> fields.
+
+### List Pagination
+
+The `list` field accepts optional `limit` and `skip` arguments for us to page
+through results. For example, to request the 2nd page of charities with 30
+charities per page:
+
+```graphql
+query ListLimitSkip {
+  CHC {
+    getCharities(filters: {}) {
+      list(limit: 30, skip: 30) {
+        id
+      }
+    }
+  }
+}
+```
+
+> By default `limit` is `10` and `skip` is `0`.
+
+> Don't use pagination to download data in bulk. If the CSV download in the
+> [Search Portal](https://search.charitybase.uk/chc?download=t) doesn't serve
+> your needs, please email support@charitybase.uk
+
+### More Examples
+
+Coming soon...
+
+<!-- ## CharityBase Elements -->
+<!--
 CharityBase Elements is a set of prebuilt UI components, like inputs and maps,
 which utilise the API for common use cases. Elements are completely customisable
 and you can style Elements to match the look and feel of your site. They're
-coming soon...
+coming soon... -->
 
-## React Components
+<!-- ## React Components -->
 
-## Schema
+<!-- ## Schema -->
