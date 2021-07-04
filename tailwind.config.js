@@ -1,6 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
+  mode: "jit",
   purge: [
     "./components/**/*.js",
     "./components/**/*.tsx",
@@ -9,14 +10,6 @@ module.exports = {
     "./pages/**/*.tsx",
     "./pages/**/*.mdx",
   ],
-  variants: {
-    extend: {
-      backgroundColor: ["active"],
-      scale: ["active", "group-hover"],
-      opacity: ["disabled"],
-      cursor: ["disabled"],
-    },
-  },
   theme: {
     extend: {
       fontFamily: {
