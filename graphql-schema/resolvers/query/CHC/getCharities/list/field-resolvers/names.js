@@ -15,10 +15,22 @@ async function getList(searchSource, { all }) {
           },
         ]
       }
-      return doc._source.names.map(({ name }) => ({
-        value: name,
-        primary: name === doc._source[NAME_ES_FIELD],
-      }))
+      let names = [
+        {
+          value: doc._source[NAME_ES_FIELD],
+          primary: true,
+        },
+      ]
+      // `doc._source.names` now represents *other* names (not including `primaryName`)
+      if (doc._source.names) {
+        doc._source.names.forEach((x) =>
+          names.push({
+            value: x.name,
+            primary: false,
+          })
+        )
+      }
+      return names
     })
   } catch (e) {
     throw e
