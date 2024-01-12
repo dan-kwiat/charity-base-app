@@ -8,6 +8,7 @@ const esClient = new elasticsearch.Client({
   host: CHARITY_BASE_ES_AWS_HOST,
   connectionClass: awsConnector,
   awsConfig,
+  apiVersion: "6.8",
 })
 
 module.exports = esClient

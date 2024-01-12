@@ -2,6 +2,8 @@ import Cors from "cors"
 import { ApolloServer } from "apollo-server-micro"
 import schema from "graphql-schema"
 import runMiddleware from "helpers/runMiddleware"
+import { authHeaders } from "graphql-schema/directiveResolvers/helpers"
+import { logRequest } from "helpers/logRequestNew"
 const cors = Cors({})
 
 const apolloServer = new ApolloServer({
@@ -42,8 +44,11 @@ const apolloServer = new ApolloServer({
     // ],
   },
   introspection: true,
-  context: ({ req }) => {
+  context: async ({ req }) => {
     const { authorization, origin } = req.headers
+    const apiKey = authHeaders(authorization || "").apikey
+    await logRequest(origin, apiKey)
+
     // if the request comes from charitybase website, set auth header if none exists.
     // warning: origin could easily be spoofed
     if (!authorization && origin === process.env.NEXT_PUBLIC_URL) {
