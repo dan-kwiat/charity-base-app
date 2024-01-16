@@ -89,9 +89,7 @@ export default function Home() {
             <PageLinkContainer>Search Charities</PageLinkContainer>
           </a>
           <Link href="/docs">
-            <a>
-              <PageLinkContainer>Access the API</PageLinkContainer>
-            </a>
+            <PageLinkContainer>Access the API</PageLinkContainer>
           </Link>
         </div>
       </div>

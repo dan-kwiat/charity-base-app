@@ -21,21 +21,13 @@ function MergeSourcesHorizontal() {
 function MergeSourcesVertical() {
   return (
     <pre className="md:hidden font-mono text-pink-600 text-xl">
-      {`
-|  |  |  |  | 
-|  |  |  |  | 
-|  |  |  |  |   `}
+      {`|  |  |  |  |   \n|  |  |  |  |   \n|  |  |  |  |   `}
       <span className="text-pink-600 font-semibold">CLEAN</span>
-      {`
-|  |  |  |  |   `}
+      {`\n|  |  |  |  |   `}
       <span className="text-pink-600 font-semibold">AGGREGATE</span>
-      {`
-|  |  |  |  |   `}
+      {`\n|  |  |  |  |   `}
       <span className="text-pink-600 font-semibold">ANALYSE</span>
-      {`
-|  |  |  |  | 
-V  V  V  V  V 
-`}
+      {`\n|  |  |  |  | \nV  V  V  V  V`}
     </pre>
   )
 }

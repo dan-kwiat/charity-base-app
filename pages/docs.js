@@ -85,15 +85,18 @@ export default function Docs({ html, toc }) {
         <ul className="space-y-3">
           {toc.map(({ id, name, children }) => (
             <li key={`contents-${id}`} className="text-lg">
-              <Link href={`#${id}`}>
-                <a className="text-gray-700 hover:text-black">{name}</a>
+              <Link href={`#${id}`} className="text-gray-700 hover:text-black">
+                {name}
               </Link>
               {children ? (
                 <ul className="space-y-2 pl-3 pt-2">
                   {children.map(({ id, name }) => (
                     <li key={`contents-${id}`} className="text-base">
-                      <Link href={`#${id}`}>
-                        <a className="text-gray-700 hover:text-black">{name}</a>
+                      <Link
+                        href={`#${id}`}
+                        className="text-gray-700 hover:text-black"
+                      >
+                        {name}
                       </Link>
                     </li>
                   ))}
