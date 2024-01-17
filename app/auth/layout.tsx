@@ -11,15 +11,16 @@ import {
   DocumentTextIcon,
   ArrowUpRightIcon,
 } from "@heroicons/react/24/outline"
-import classNames from "lib/classNames"
 import Link from "next/link"
 import UserDropdown from "./user-dropdown"
 import UserDropdownMobile from "./user-dropdown-mobile"
+import { usePathname } from "next/navigation"
+import clsx from "clsx"
 
 const navigation = [
-  { name: "API keys", href: "#", icon: KeyIcon, current: true },
-  { name: "Usage", href: "#", icon: ChartBarIcon, current: false },
-  { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
+  { name: "API keys", href: "/auth/keys", icon: KeyIcon },
+  { name: "Usage", href: "#", icon: ChartBarIcon },
+  { name: "Settings", href: "#", icon: Cog6ToothIcon },
 ]
 
 const resources = [
@@ -28,20 +29,22 @@ const resources = [
     name: "Playground",
     href: "/api/graphql",
     icon: CommandLineIcon,
-    current: false,
   },
   {
     id: 2,
     name: "Docs",
     href: "/docs",
     icon: DocumentTextIcon,
-    current: false,
   },
 ]
 
+function isCurrent(href: string, pathname: string | null) {
+  return pathname?.indexOf(href) === 0
+}
+
 export default function Page({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
+  const pathname = usePathname()
   return (
     <>
       <div>
@@ -117,18 +120,18 @@ export default function Page({ children }) {
                           <ul role="list" className="-mx-2 space-y-1">
                             {navigation.map((item) => (
                               <li key={item.name}>
-                                <a
+                                <Link
                                   href={item.href}
-                                  className={classNames(
-                                    item.current
+                                  className={clsx(
+                                    isCurrent(item.href, pathname)
                                       ? "bg-gray-50 text-pink-600"
                                       : "text-gray-700 hover:text-pink-600 hover:bg-gray-50",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                   )}
                                 >
                                   <item.icon
-                                    className={classNames(
-                                      item.current
+                                    className={clsx(
+                                      isCurrent(item.href, pathname)
                                         ? "text-pink-600"
                                         : "text-gray-400 group-hover:text-pink-600",
                                       "h-6 w-6 shrink-0"
@@ -136,7 +139,7 @@ export default function Page({ children }) {
                                     aria-hidden="true"
                                   />
                                   {item.name}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -152,16 +155,16 @@ export default function Page({ children }) {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   href={item.href}
-                                  className={classNames(
-                                    item.current
+                                  className={clsx(
+                                    isCurrent(item.href, pathname)
                                       ? "bg-gray-50 text-pink-600"
                                       : "text-gray-700 hover:text-pink-600 hover:bg-gray-50",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                   )}
                                 >
                                   <item.icon
-                                    className={classNames(
-                                      item.current
+                                    className={clsx(
+                                      isCurrent(item.href, pathname)
                                         ? "text-pink-600"
                                         : "text-gray-400 group-hover:text-pink-600",
                                       "h-6 w-6 shrink-0"
@@ -205,18 +208,18 @@ export default function Page({ children }) {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
+                        <Link
                           href={item.href}
-                          className={classNames(
-                            item.current
+                          className={clsx(
+                            isCurrent(item.href, pathname)
                               ? "bg-gray-50 text-pink-600"
                               : "text-gray-700 hover:text-pink-600 hover:bg-gray-50",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           )}
                         >
                           <item.icon
-                            className={classNames(
-                              item.current
+                            className={clsx(
+                              isCurrent(item.href, pathname)
                                 ? "text-pink-600"
                                 : "text-gray-400 group-hover:text-pink-600",
                               "h-6 w-6 shrink-0"
@@ -224,7 +227,7 @@ export default function Page({ children }) {
                             aria-hidden="true"
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -240,16 +243,16 @@ export default function Page({ children }) {
                           target="_blank"
                           rel="noopener noreferrer"
                           href={item.href}
-                          className={classNames(
-                            item.current
+                          className={clsx(
+                            isCurrent(item.href, pathname)
                               ? "bg-gray-50 text-pink-600"
                               : "text-gray-700 hover:text-pink-600 hover:bg-gray-50",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           )}
                         >
                           <item.icon
-                            className={classNames(
-                              item.current
+                            className={clsx(
+                              isCurrent(item.href, pathname)
                                 ? "text-pink-600"
                                 : "text-gray-400 group-hover:text-pink-600",
                               "h-6 w-6 shrink-0"

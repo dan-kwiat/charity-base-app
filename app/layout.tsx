@@ -1,9 +1,8 @@
 import { Metadata } from "next"
 import { Roboto } from "next/font/google"
 import { UserProvider } from "@auth0/nextjs-auth0/client"
-
+import clsx from "clsx"
 import "index.css"
-import classNames from "lib/classNames"
 
 export const metadata: Metadata = {
   title: "CharityBase",
@@ -27,9 +26,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={classNames("h-full bg-white", roboto.className)}>
+    <html lang="en" className={clsx("h-full bg-white", roboto.className)}>
       <UserProvider>
-        <body className="h-full">{children}</body>
+        <body className="h-full dark:bg-zinc-800 dark:text-zinc-100">
+          {children}
+        </body>
       </UserProvider>
     </html>
   )

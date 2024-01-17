@@ -23,6 +23,7 @@
     "archiver": "^4.0.1",
     "aws-sdk": "^2.704.0",
     "bunyan": "^1.8.13",
+    "clsx": "^2.1.0",
     "copy-to-clipboard": "^3.3.1",
     "cors": "^2.8.5",
     "downshift": "^5.4.6",
@@ -42,6 +43,7 @@
     "rehype-stringify": "^8.0.0",
     "remark-parse": "^8.0.2",
     "remark-rehype": "^7.0.0",
+    "swr": "^2.2.4",
     "unified": "^9.0.0",
     "uuid": "^8.3.2"
   },

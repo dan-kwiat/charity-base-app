@@ -1,3 +1,4 @@
+import { ApiKey } from "app/auth/keys/types"
 import dynamodb from "connection/dynamo"
 import auth0 from "lib/auth0"
 import { NextResponse } from "next/server"
@@ -18,7 +19,11 @@ export const GET = auth0.withApiAuthRequired(async function GET(req) {
     })
     .promise()
 
-  const keys = data?.Items?.map(({ id, createdAt, roles }) => ({
+  if (!data.Items) {
+    return NextResponse.json({ keys: [] }, res) // todo: make it a 400 response with message
+  }
+
+  const keys: Array<ApiKey> = data.Items.map(({ id, createdAt, roles }) => ({
     id,
     createdAt,
     roles,
