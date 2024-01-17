@@ -33,24 +33,29 @@ export default function Page() {
 
   return (
     <div>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableHeader>Key</TableHeader>
-            <TableHeader>Created</TableHeader>
-            <TableHeader>Roles</TableHeader>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {arr?.map((item) => (
-            <TableRow key={item.id} className="font-mono">
-              <TableCell className="font-medium">{item.id}</TableCell>
-              <TableCell>{item.createdAt}</TableCell>
-              <TableCell>{item.roles.join(", ")}</TableCell>
+      <h2 className="text-2xl font-bold leading-7 text-zinc-900 dark:text-zinc-100 sm:truncate sm:text-3xl sm:tracking-tight">
+        API Keys
+      </h2>
+      <div className="mt-12 max-w-screen-md">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>Key</TableHeader>
+              <TableHeader>Created</TableHeader>
+              <TableHeader>Roles</TableHeader>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {arr?.map((item) => (
+              <TableRow key={item.id} className="font-mono">
+                <TableCell className="font-medium">{item.id}</TableCell>
+                <TableCell>{item.createdAt}</TableCell>
+                <TableCell>{item.roles.join(", ")}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }
