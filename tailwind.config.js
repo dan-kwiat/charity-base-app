@@ -1,14 +1,11 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
-  purge: [
-    "./components/**/*.js",
-    "./components/**/*.tsx",
-    "./components/**/*.mdx",
-    "./pages/**/*.js",
-    "./pages/**/*.tsx",
-    "./pages/**/*.mdx",
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -17,4 +14,5 @@ module.exports = {
       },
     },
   },
+  plugins: [],
 }
