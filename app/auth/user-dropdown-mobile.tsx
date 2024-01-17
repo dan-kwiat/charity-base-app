@@ -1,5 +1,12 @@
 "use client"
 import { useUser } from "@auth0/nextjs-auth0/client"
+import { Button } from "components/button"
+import {
+  Dropdown,
+  DropdownButton,
+  DropdownItem,
+  DropdownMenu,
+} from "components/dropdown"
 
 export default function UserDropdownMobile() {
   const { user, error, isLoading } = useUser()
@@ -16,28 +23,31 @@ export default function UserDropdownMobile() {
 
   if (user) {
     return (
-      <a href="#">
-        <span className="sr-only">Your profile</span>
-        {user.picture ? (
-          <img
-            className="h-8 w-8 rounded-full bg-gray-50"
-            src={user.picture}
-            width={32}
-            height={32}
-            alt={user.name ?? "Profile picture"}
-          />
-        ) : null}
-      </a>
+      <Dropdown>
+        <DropdownButton as="button">
+          <div className="h-8 w-8 rounded-full bg-gray-50">
+            <span className="sr-only">Your profile</span>
+            {user.picture ? (
+              <img
+                className="h-8 w-8 rounded-full bg-gray-50"
+                src={user.picture}
+                width={32}
+                height={32}
+                alt={user.name ?? "Profile picture"}
+              />
+            ) : null}
+          </div>
+        </DropdownButton>
+        <DropdownMenu anchor="bottom end" className="z-50">
+          <DropdownItem href="/api/auth/logout">Log out</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     )
-    // todo: allow logging out
   }
 
   return (
-    <a
-      className="text-sm font-semibold h-8 flex items-center px-2 leading-6 text-gray-900 hover:bg-gray-50"
-      href={`/api/auth/login?returnTo=${encodeURIComponent("/auth")}`}
-    >
+    <Button href={`/api/auth/login?returnTo=${encodeURIComponent("/auth")}`}>
       Login
-    </a>
+    </Button>
   )
 }
