@@ -21,7 +21,7 @@ const dummyItems: Array<ApiKey> = [
   },
 ]
 
-export default function Page({ items }) {
+export default function Page() {
   const { data, error, isLoading } = useSWR<{ keys: Array<ApiKey> }>(
     "/api/keys",
     fetcher
