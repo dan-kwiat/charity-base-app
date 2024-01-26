@@ -11,7 +11,7 @@ import { ApiKey } from "./types"
 import useSWR from "swr"
 import { Button } from "components/button"
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Alert,
   AlertActions,
@@ -41,6 +41,11 @@ function DeleteKeyAlert({
 }) {
   let [isOpen, setIsOpen] = useState(false)
   let [mismatch, setMismatch] = useState(false)
+  useEffect(() => {
+    if (isOpen) {
+      setMismatch(false)
+    }
+  }, [isOpen])
 
   return (
     <>
