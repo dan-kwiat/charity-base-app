@@ -9,6 +9,9 @@ import {
 } from "components/table"
 import { ApiKey } from "./types"
 import useSWR from "swr"
+import { Button } from "components/button"
+import { PlusIcon } from "@heroicons/react/16/solid"
+import { useState } from "react"
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((res) => res.json())
@@ -22,10 +25,11 @@ const dummyItems: Array<ApiKey> = [
 ]
 
 export default function Page() {
-  const { data, error, isLoading } = useSWR<{ keys: Array<ApiKey> }>(
+  const { data, error, isLoading, mutate } = useSWR<{ keys: Array<ApiKey> }>(
     "/api/keys",
     fetcher
   )
+  const [createKeyError, setCreateKeyError] = useState<string | null>(null)
 
   if (error) return <div>Failed to find keys</div>
 
@@ -55,6 +59,38 @@ export default function Page() {
             ))}
           </TableBody>
         </Table>
+        <div className="mt-2 flex justify-end">
+          <div>
+            {createKeyError ? (
+              <div className="text-red-400 text-sm">{createKeyError}</div>
+            ) : null}
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => {
+                fetch("/api/keys", { method: "POST" })
+                  .then((res) => {
+                    if (!res.ok) {
+                      return res.json().then((payload) => {
+                        throw new Error(payload?.error)
+                      })
+                    }
+                    return res.json()
+                  })
+                  .then(({ key }: { key: ApiKey }) => {
+                    setCreateKeyError(null)
+                    mutate({ keys: [key, ...(data?.keys || [])] })
+                  })
+                  .catch((err) => {
+                    setCreateKeyError("Failed to create key")
+                    console.error(err.message || "Failed to create key")
+                  })
+              }}
+            >
+              <PlusIcon />
+              New Key
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )
