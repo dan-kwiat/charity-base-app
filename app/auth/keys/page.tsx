@@ -18,6 +18,8 @@ import {
   AlertDescription,
   AlertTitle,
 } from "components/alert"
+import { ErrorMessage, Field, Label } from "components/fieldset"
+import { Input } from "components/input"
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((res) => res.json())
@@ -30,8 +32,15 @@ const dummyItems: Array<ApiKey> = [
   },
 ]
 
-function DeleteKeyAlert({ onDelete }: { onDelete: () => void }) {
+function DeleteKeyAlert({
+  keyId,
+  onDelete,
+}: {
+  keyId: string
+  onDelete: () => void
+}) {
   let [isOpen, setIsOpen] = useState(false)
+  let [mismatch, setMismatch] = useState(false)
 
   return (
     <>
@@ -44,12 +53,26 @@ function DeleteKeyAlert({ onDelete }: { onDelete: () => void }) {
           This process is irreversible and any applications using this key will
           stop working.
         </AlertDescription>
+        <Field className="mt-4">
+          <Label>Confirm API Key</Label>
+          <Input name="api_key_id" invalid={mismatch} />
+          {mismatch ? (
+            <ErrorMessage>API key does not match</ErrorMessage>
+          ) : null}
+        </Field>
         <AlertActions>
           <Button plain onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
           <Button
             onClick={() => {
+              const textInput = document.querySelector(
+                "input[name=api_key_id]"
+              ) as HTMLInputElement
+              if (textInput.value.trim() !== keyId) {
+                setMismatch(true)
+                return
+              }
               onDelete()
               setIsOpen(false)
             }}
@@ -96,6 +119,7 @@ export default function Page() {
                 <TableCell>{item.roles.join(", ")}</TableCell>
                 <TableCell>
                   <DeleteKeyAlert
+                    keyId={item.id}
                     onDelete={() => {
                       fetch(`/api/keys/${item.id}`, { method: "DELETE" })
                         .then((res) => {
