@@ -55,7 +55,7 @@ function DeleteKeyAlert({
         </AlertDescription>
         <Field className="mt-4">
           <Label>Confirm API Key</Label>
-          <Input name="api_key_id" invalid={mismatch} />
+          <Input name="api_key_id" invalid={mismatch} autoComplete="off" />
           {mismatch ? (
             <ErrorMessage>API key does not match</ErrorMessage>
           ) : null}
