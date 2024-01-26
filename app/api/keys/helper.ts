@@ -75,3 +75,31 @@ export async function createKey(sub: string): Promise<ApiKey> {
     throw new Error(`Failed to create key`)
   }
 }
+
+export async function deleteKey(
+  id: string,
+  sub: string
+): Promise<ApiKey | undefined> {
+  try {
+    const params = {
+      TableName: process.env.CHARITY_BASE_DYNAMO_TABLE_AUTH_KEYS!,
+      Key: { id },
+      ConditionExpression: "attribute_exists(id) AND userId = :userId",
+      ExpressionAttributeValues: {
+        ":userId": sub,
+      },
+      ReturnValues: "ALL_OLD",
+    }
+    const { Attributes: key } = await dynamoClient.delete(params).promise()
+    if (!key) {
+      throw new Error(`No attributes found on response from dynamodb`)
+    }
+    return {
+      id: key.id,
+      createdAt: key.createdAt,
+      roles: key.roles,
+    }
+  } catch (e) {
+    throw new Error(`Failed to delete api key`)
+  }
+}

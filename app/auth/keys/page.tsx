@@ -10,8 +10,14 @@ import {
 import { ApiKey } from "./types"
 import useSWR from "swr"
 import { Button } from "components/button"
-import { PlusIcon } from "@heroicons/react/16/solid"
+import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid"
 import { useState } from "react"
+import {
+  Alert,
+  AlertActions,
+  AlertDescription,
+  AlertTitle,
+} from "components/alert"
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((res) => res.json())
@@ -23,6 +29,38 @@ const dummyItems: Array<ApiKey> = [
     roles: ["basic"],
   },
 ]
+
+function DeleteKeyAlert({ onDelete }: { onDelete: () => void }) {
+  let [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <>
+      <Button plain type="button" onClick={() => setIsOpen(true)}>
+        <TrashIcon />
+      </Button>
+      <Alert open={isOpen} onClose={setIsOpen}>
+        <AlertTitle>Are you sure you want to delete this key?</AlertTitle>
+        <AlertDescription>
+          This process is irreversible and any applications using this key will
+          stop working.
+        </AlertDescription>
+        <AlertActions>
+          <Button plain onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              onDelete()
+              setIsOpen(false)
+            }}
+          >
+            Delete key
+          </Button>
+        </AlertActions>
+      </Alert>
+    </>
+  )
+}
 
 export default function Page() {
   const { data, error, isLoading, mutate } = useSWR<{ keys: Array<ApiKey> }>(
@@ -40,13 +78,14 @@ export default function Page() {
       <h2 className="text-2xl font-bold leading-7 text-zinc-900 dark:text-zinc-100 sm:truncate sm:text-3xl sm:tracking-tight">
         API Keys
       </h2>
-      <div className="mt-12 max-w-screen-md">
+      <div className="mt-12 max-w-screen-lg">
         <Table>
           <TableHead>
             <TableRow>
               <TableHeader>Key</TableHeader>
               <TableHeader>Created</TableHeader>
               <TableHeader>Roles</TableHeader>
+              <TableHeader>Delete</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -55,6 +94,31 @@ export default function Page() {
                 <TableCell className="font-medium">{item.id}</TableCell>
                 <TableCell>{item.createdAt}</TableCell>
                 <TableCell>{item.roles.join(", ")}</TableCell>
+                <TableCell>
+                  <DeleteKeyAlert
+                    onDelete={() => {
+                      fetch(`/api/keys/${item.id}`, { method: "DELETE" })
+                        .then((res) => {
+                          if (!res.ok) {
+                            return res.json().then((payload) => {
+                              throw new Error(payload?.error)
+                            })
+                          }
+                          return res.json()
+                        })
+                        .then(() => {
+                          mutate({
+                            keys: (data?.keys || []).filter(
+                              (key) => key.id !== item.id
+                            ),
+                          })
+                        })
+                        .catch((err) => {
+                          console.error(err.message || "Failed to delete key")
+                        })
+                    }}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

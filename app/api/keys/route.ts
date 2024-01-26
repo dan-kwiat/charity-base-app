@@ -35,7 +35,6 @@ export const POST = auth0.withApiAuthRequired(async function POST(req) {
   }
   try {
     const key = await createKey(sub)
-    console.log(key)
     return NextResponse.json({ key }, res)
   } catch (err) {
     console.error(err)
