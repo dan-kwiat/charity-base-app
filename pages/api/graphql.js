@@ -49,6 +49,15 @@ const apolloServer = new ApolloServer({
     const apiKey = authHeaders(authorization || "").apikey
     await logRequest(origin, apiKey)
 
+    if (
+      (!apiKey || apiKey.split("-").length !== 5) &&
+      origin !== process.env.NEXT_PUBLIC_URL
+    ) {
+      throw new Error(
+        `Invalid API key, visit https://charitybase.uk/console/keys to create a new key.`
+      )
+    }
+
     // if the request comes from charitybase website, set auth header if none exists.
     // warning: origin could easily be spoofed
     if (!authorization && origin === process.env.NEXT_PUBLIC_URL) {
