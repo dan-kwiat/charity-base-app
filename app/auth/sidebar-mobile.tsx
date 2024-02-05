@@ -10,7 +10,7 @@ import Link from "next/link"
 import UserDropdownMobile from "./user-dropdown-mobile"
 import { useSelectedLayoutSegment } from "next/navigation"
 import clsx from "clsx"
-import { navigation, resources } from "./constants"
+import { navigation, resources, topLevelSegment } from "./constants"
 
 export default function SidebarMobile({}: {}) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -87,7 +87,9 @@ export default function SidebarMobile({}: {}) {
                           {navigation.map((item) => (
                             <li key={item.name}>
                               <Link
-                                href={`/auth/${item.segment || ""}`}
+                                href={`/${topLevelSegment}/${
+                                  item.segment || ""
+                                }`}
                                 className={clsx(
                                   item.segment
                                     ? item.segment === segment

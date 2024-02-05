@@ -3,7 +3,7 @@ import { ArrowUpRightIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import UserDropdown from "./user-dropdown"
 import clsx from "clsx"
-import { navigation, resources } from "./constants"
+import { navigation, resources, topLevelSegment } from "./constants"
 import { useSelectedLayoutSegment } from "next/navigation"
 
 export default function SidebarDesktop() {
@@ -27,7 +27,7 @@ export default function SidebarDesktop() {
                 {navigation.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={`/auth/${item.segment || ""}`}
+                      href={`/${topLevelSegment}/${item.segment || ""}`}
                       className={clsx(
                         item.segment
                           ? item.segment === segment

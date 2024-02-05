@@ -7,6 +7,7 @@ import {
   DropdownItem,
   DropdownMenu,
 } from "components/dropdown"
+import { topLevelSegment } from "./constants"
 
 export default function UserDropdownMobile() {
   const { user, error, isLoading } = useUser()
@@ -46,7 +47,11 @@ export default function UserDropdownMobile() {
   }
 
   return (
-    <Button href={`/api/auth/login?returnTo=${encodeURIComponent("/auth")}`}>
+    <Button
+      href={`/api/auth/login?returnTo=${encodeURIComponent(
+        `/${topLevelSegment}`
+      )}`}
+    >
       Login
     </Button>
   )
