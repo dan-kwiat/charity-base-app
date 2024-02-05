@@ -43,7 +43,7 @@ const AppBar = () => {
   const offset = useAppBar(() => 64, 1023) // values correspond to h-16 and device < lg
   return (
     <header
-      className="fixed top-0 left-0 right-0 text-gray-700 z-50 h-16 shadow-lg blur bg-white bg-opacity-75 flex justify-between items-center px-4 md:px-8 xl:px-12"
+      className="fixed top-0 left-0 right-0 text-gray-700 z-50 h-16 shadow-lg bg-white bg-opacity-75 flex justify-between items-center px-4 md:px-8 xl:px-12"
       style={{ transform: `translateY(${offset}px)` }}
     >
       <Link
@@ -65,15 +65,12 @@ const AppBar = () => {
             </div>
           </div>
         </div> */}
-        <a
+        <Link
           className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
-          target="_blank"
-          rel="noreferrer noopener"
-          href="https://search.charitybase.uk/api-portal/keys"
+          href="/console/keys"
         >
           <div>API Keys</div>
-          <ExternalLinkIcon />
-        </a>
+        </Link>
         <a
           className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
           target="_blank"
@@ -84,11 +81,6 @@ const AppBar = () => {
           <ExternalLinkIcon />
         </a>
       </section>
-      <style jsx>{`
-        .blur {
-          backdrop-filter: saturate(180%) blur(5px);
-        }
-      `}</style>
     </header>
   )
 }

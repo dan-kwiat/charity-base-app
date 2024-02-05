@@ -32,8 +32,7 @@ Every request must be sent with an `Authorization` header of the form:
 Apikey YOUR_API_KEY
 ```
 
-where `YOUR_API_KEY` is one of
-[your keys](https://search.charitybase.uk/api-portal/keys).
+where `YOUR_API_KEY` is one of [your keys](https://charitybase.uk/console/keys).
 
 ### Query
 

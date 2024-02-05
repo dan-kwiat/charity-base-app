@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: `/api-portal`,
-        destination: "/docs",
+        destination: "/console",
         permanent: false,
       },
       {
