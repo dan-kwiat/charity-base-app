@@ -7,7 +7,7 @@ import {
   DropdownMenu,
 } from "components/dropdown"
 import { Button } from "components/button"
-import { topLevelSegment } from "./constants"
+import { topLevelSegment, navigation } from "./constants"
 
 export default function UserDropdown() {
   const { user, error, isLoading } = useUser()
@@ -62,7 +62,7 @@ export default function UserDropdown() {
     <li className="mt-auto mb-4">
       <Button
         href={`/api/auth/login?returnTo=${encodeURIComponent(
-          `/${topLevelSegment}`
+          `/${topLevelSegment}/${navigation[0].segment}`
         )}`}
         className="w-full"
       >

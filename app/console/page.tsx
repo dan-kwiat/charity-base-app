@@ -1,19 +1,21 @@
-"use client"
-import { useUser } from "@auth0/nextjs-auth0/client"
+import Link from "next/link"
+import { topLevelSegment } from "./constants"
 
 export default function PageAuth() {
-  const { user, error, isLoading } = useUser()
-
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>{error.message}</div>
-
-  if (user) {
-    return (
-      <div>
-        Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
-      </div>
-    )
-  }
-
-  return <a href="/api/auth/login">Login</a>
+  return (
+    <div>
+      <h1 className="text-2xl font-bold leading-7 text-zinc-900 dark:text-zinc-100 sm:truncate sm:text-3xl sm:tracking-tight">
+        Developer Console
+      </h1>
+      <p className="mt-4">
+        Welcome to the developer console. Create and manage your API keys here:{" "}
+        <Link
+          className="font-semibold text-pink-600 dark:text-pink-400 hover:underline"
+          href={`/${topLevelSegment}/keys`}
+        >
+          API Keys
+        </Link>
+      </p>
+    </div>
+  )
 }

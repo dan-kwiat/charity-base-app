@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import SidebarMobile from "./sidebar-mobile"
 import SidebarDesktop from "./sidebar-desktop"
 import auth0 from "lib/auth0"
-import { topLevelSegment } from "./constants"
+import { topLevelSegment, navigation } from "./constants"
 
 export const metadata: Metadata = {
   title: "CharityBase API Console",
@@ -25,5 +25,5 @@ function Page({ children }) {
 export default auth0.withPageAuthRequired(
   // @ts-ignore
   Page,
-  { returnTo: `/${topLevelSegment}` }
+  { returnTo: `/${topLevelSegment}/${navigation[0].segment}` }
 )

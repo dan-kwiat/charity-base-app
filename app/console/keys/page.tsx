@@ -103,9 +103,9 @@ export default function Page() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold leading-7 text-zinc-900 dark:text-zinc-100 sm:truncate sm:text-3xl sm:tracking-tight">
+      <h1 className="text-2xl font-bold leading-7 text-zinc-900 dark:text-zinc-100 sm:truncate sm:text-3xl sm:tracking-tight">
         API Keys
-      </h2>
+      </h1>
       <div className="mt-12 max-w-screen-lg">
         <Table>
           <TableHead>
