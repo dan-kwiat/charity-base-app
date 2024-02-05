@@ -6,7 +6,7 @@ import {
   DocumentTextIcon,
 } from "@heroicons/react/24/outline"
 
-export const topLevelSegment = "auth"
+export const topLevelSegment = "console"
 
 export const navigation = [
   { name: "API keys", segment: "keys", icon: KeyIcon },

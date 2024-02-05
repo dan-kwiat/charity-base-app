@@ -1,4 +1,4 @@
-import { ApiKey } from "app/auth/keys/types"
+import { ApiKey } from "app/console/keys/types"
 import dynamodb from "connection/dynamo"
 import { v4 as uuidv4 } from "uuid"
 import { dynamoClient } from "connection"
